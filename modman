@@ -1,4 +1,4 @@
-app/code/local/MageGoat/GetMember app/code/community/MageGoat/GetMember
+app/code/community/MageGoat/GetMember app/code/community/MageGoat/GetMember
 
 app/design/adminhtml/default/default/layout/getmember.xml app/design/adminhtml/default/default/layout/getmember.xml
 
