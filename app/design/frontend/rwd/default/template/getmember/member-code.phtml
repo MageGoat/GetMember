@@ -1,0 +1,49 @@
+<?php
+/**
+ *
+ */
+
+/** @var $this MageGoat_GetMember_Block_Info */	
+?>
+
+<?php #var_dump($this->getMember()->getData()) ?>
+<?php #var_dump($this->getMember()->getCustomer()->getData()) ?>
+<?php $this->getMember()->getMemberCode() ?>
+
+<head>
+<style type="text/css">
+.label-member {
+	z-index:999;
+	position: relative;
+	float: right;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    font-size: 55%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.label-member-success {
+    background-color: #5cb85c;
+}
+
+</style>
+</head>
+
+
+<span class="label-member label-member-success" title="<?php echo $this->escapeHtml($this->getMember()->getComment()) ?>">
+	success applied
+	'<?php echo $this->escapeHtml($this->getMember()->getMemberCode()) ?>'
+</span>
+
+<!-- <div id="header-member-get-member" class="block block-member-code">
+	<a href="https://api.whatsapp.com/send?text=<?php #echo urlencode($this->getShareUrl()); ?>">Share via Whatsapp</a>
+</div> -->

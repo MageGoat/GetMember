@@ -1,0 +1,95 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ */
+?>
+<?php 
+    /* MageGoat_GetMember_Model_Member */
+    #$this->getMember()
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Member Get Member') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<?php echo $this->getChildHtml('form_before')?>
+<form action="<?php echo $this->getUrl('*/*/save') ?>" method="post" id="getmember-form-validate">
+    <div class="fieldset">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <h2 class="legend"><?php echo $this->__('Member Get Member') ?></h2>
+        <ul class="form-list">
+          <li class="wide">
+              <label for="member_code" class="required"><em>*</em>Member Code</label>
+              <div class="input-box">  
+                  <input type="text" name="member_code"  class="input-text required-entry" placeholder="Member Code" value="<?php echo $this->escapeHtml($this->getMember()->getMemberCode())  ?>">
+              </div>
+            </li>
+            <li class="wide">
+                <label for="comment">Bio Comment</label>
+                <div class="input-box">
+                    <textarea name="comment" id="comment" placeholder="PUBLIC COMMENT" title="Comment" class="input-text" cols="5" rows="3"><?php echo $this->escapeHtml($this->getMember()->getComment())  ?></textarea>
+                </div>
+            </li>
+            <?php if ($this->getMember()->getMemberCode()): ?>
+                <div class="col2-set">
+                    <div class="col-1">
+                        <div class="label-box">
+                             <img src="https://www-cdn.whatsapp.net/img/v4/whatsapp-logo.svg">
+                            <a href="https://api.whatsapp.com/send?text=<?php echo urlencode($this->getUrl('', array('_query' => array ('mCode' => $this->getMember()->getMemberCode())))) ?>">Share</a>
+                        </div>
+
+                        <input type="hidden" id="member-url-code" value="<?php echo $this->getUrl('', array('_query' => array ('mCode' => $this->getMember()->getMemberCode()))) ?>"  />
+                        <button type="button" id="btn-member-url-code">Copy Link</button>
+                        
+                    </div>
+                </div>
+            <?php endif ?>
+
+
+        </ul>
+    <?php echo $this->getChildHtml('member-points'); ?>
+    </div>
+    <div class="buttons-set">
+        <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+        <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Save')) ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+    </div>
+</form>
+
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('getmember-form-validate', true);
+//]]>
+</script>
+
+<script type="text/javascript">
+    function copyText(text){
+        function selectElementText(element) {
+            if (document.selection) {
+              var range = document.body.createTextRange();
+              range.moveToElementText(element);
+              range.select();
+            } else if (window.getSelection) {
+              var range = document.createRange();
+              range.selectNode(element);
+              window.getSelection().removeAllRanges();
+              window.getSelection().addRange(range);
+            }
+          }
+
+      var element = document.createElement('DIV');
+      element.textContent = text;
+      document.body.appendChild(element);
+      selectElementText(element);
+      document.execCommand('copy');
+      element.remove();
+    }
+
+
+var txt = document.getElementById('member-url-code');
+var btn = document.getElementById('btn-member-url-code');
+btn.addEventListener('click', function(){
+  copyText(txt.value);
+})
+</script>

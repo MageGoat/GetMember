@@ -1,0 +1,65 @@
+<?php
+/**
+ * Point list template
+ *
+ * @see MageGoat_GetMember_Block_Member_Points
+ */
+/* @var $this MageGoat_GetMember_Block_Member_Points */
+?>
+<?php 
+
+	$_pointCollection = $this->getLoadedPointCollection();
+?>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.total-points {
+	background-color: #F0F8FF;
+}
+
+.note-msg {
+
+border-top: 1px solid #cccccc;
+}
+
+</style>
+</head>
+
+<?php if(!$_pointCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no points matching the selection.') ?></p>
+<?php else: ?>
+<table>
+  <tr>
+    <th>Order Increment</th><th>Points</th><th>State</th>
+  </tr>
+		
+	<?php foreach ($_pointCollection as $_point): ?>
+			<tr>
+				<td><?php echo $_point->getOrderIncrementId(); ?></td>
+				<td class="points-mumber" data-points="<?php echo $_point->getPoints(); ?>"><?php echo $_point->getPoints(); ?></td>
+				<td><?php echo $_point->getState(); ?></td>
+			</tr>
+	<?php endforeach ?>
+	<tr class="total-points">
+    <th>Total:</th><th id="total-member-points">-</th>
+  </tr>
+</table>
+<script type="text/javascript">
+	//functional programing brother :D MauMau
+	var sum = $$('.points-mumber').reduce(
+		( prevVal, elem ) => prevVal + (parseInt(elem.dataset.points) || 0), 0 );
+
+	$('total-member-points').update(sum)
+</script>
+<?php endif; ?>

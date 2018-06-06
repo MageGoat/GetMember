@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ */
+
+-->
+<layout version="0.1.0">
+
+<!--
+Default layout, loads most of the pages
+-->
+
+    <default>
+
+        <!-- MageGoat_GetMember -->
+       <!--  <reference name="footer">
+            <block type="core/template" name="footer.member.code" as="membercode" before="-" template="getmember/member-code.phtml"/>
+        </reference> -->
+        <reference name="top.container">
+            <block type="getmember/member_info" name="top.member.code" as="topMemberCode" after="-" template="getmember/member-code.phtml" />
+        </reference>
+    </default>
+
+    <!-- customer painel -->
+    <customer_account>
+        <!-- MageGoat_GetMember -->
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label"><name>getmember</name><path>getmember/member/dashboard</path><label>Member Get Member</label></action>
+        </reference>
+    </customer_account>
+
+    <getmember_member_dashboard translate="label">
+        <label>Customer My Account Newsletter Subscriptions</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="core/template" name="getmember_dashboard" template="getmember/dashboard/member.phtml">
+                <block type="page/html_wrapper" name="customer.getmember.dashboard.form" as="form_before" translate="label">
+                    <label>Member Get Member</label>
+                </block>
+                 <block type="getmember/member_points" name="footer.member.point" as="member-points" after="-" template="getmember/dashboard/member/points.phtml" />
+            </block>
+        </reference>
+    </getmember_member_dashboard>
+
+    <checkout_cart_index>
+        <reference name="checkout.cart.extra">
+           <block type="getmember/member_points" name="footer.member.point" as="member-points" after="-" template="getmember/checkout/cart-points.phtml" />
+        </reference>
+    </checkout_cart_index>
+</layout>

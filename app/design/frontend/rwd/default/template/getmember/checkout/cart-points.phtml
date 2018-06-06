@@ -1,0 +1,60 @@
+<?php
+/**
+ * Point list template
+ *
+ * @see MageGoat_GetMember_Block_Member_Points
+ */
+/* @var $this MageGoat_GetMember_Block_Member_Points */
+?>
+<?php 
+	#$_pointCollection = $this->getLoadedPointCollection();
+?>
+<?php if ($total = $this->getTotal()): ?>
+<head>
+<style>
+	#point-form label {
+	  font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+	  font-size: 12px;
+	  font-weight: 400;
+	  text-align: left;
+	  text-transform: uppercase;
+	  min-width: 105px;
+	  display: inline-block;
+	  margin-right: 10px;
+	}
+	#point-form .field-wrapper {
+	  display: inline-block;
+	}
+	#point-form .button-wrapper {
+	  display: inline-block;
+	  vertical-align: bottom;
+	}
+	.cart-forms .point {
+	  margin-bottom: 20px;
+	  padding: 10px;
+	  background-color: #f4f4f4;
+	  border: 1px solid #cccccc;
+	}
+</style>
+</head>
+
+<form id="point-form" action="<?php echo $this->getFormActionUrl() ?>" method="post">
+    <div class="point">
+        <div class="fieldset">
+        	<?php echo $this->getBlockHtml('formkey')?>
+            <label for="member_point"><?php echo $this->__('Member Points') ?></label>
+            <div class="field-wrapper">
+                <span><?php echo $total ?></span>
+                <div class="button-wrapper">
+                	<input type="checkbox" <?php echo ($this->isApplyMemberPoint())? 'checked': ''; ?> onclick="pointForm.submit()" name="apply_member_point" value="1">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+	var pointForm = new VarienForm('point-form');
+//]]>
+</script>
+<?php endif ?>
