@@ -6,18 +6,28 @@ Member Get Member - Magento 1
 $ cd /path/to/module
 $ git clone https://github.com/MageGoat/GetMember.git
 ```
+
+
 ```
 $ cd path/to/magento
-$ modman link --copy GetMember <path to module>
+$ modman link GetMember <path to module>
 ```
 
-Alterando o modulo no **/path/to/module** executar o comando no **/path/to/magento** para atualizar.
+
+magento aceita link simbolico, alterarando no app/etc/config.xml.
 ```
-$ modman update GetMember --force
+ <dev>
+    <template>
+        <allow_symlink>1</allow_symlink>
+    </template>
+</dev>
 ```
 
-link simbolito com problemas * analisando...
 
+de link simbolico para copia.
+```
+modman deploy --copy GetMember
+```
 
 -------------------
 reset module  MySQL

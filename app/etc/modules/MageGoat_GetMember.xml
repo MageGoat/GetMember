@@ -3,7 +3,7 @@
     <modules>
         <MageGoat_GetMember>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
         </MageGoat_GetMember>
     </modules>
 </config>
