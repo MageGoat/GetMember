@@ -1,0 +1,8 @@
+app/code/local/MageGoat/GetMember app/code/community/MageGoat/GetMember
+
+app/design/adminhtml/default/default/layout/getmember.xml app/design/adminhtml/default/default/layout/getmember.xml
+
+app/design/frontend/base/default/layout/getmember.xml app/design/frontend/base/default/layout/getmember.xml 
+app/design/frontend/base/default/template/getmember app/design/frontend/base/default/template/getmember
+
+app/etc/modules/MageGoat_GetMember.xml app/etc/modules/MageGoat_GetMember.xml
