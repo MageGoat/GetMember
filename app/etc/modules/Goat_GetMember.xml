@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Goat_GetMember>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Goat_GetMember>
+    </modules>
+</config>

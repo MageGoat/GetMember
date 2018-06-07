@@ -14,7 +14,7 @@ Default layout, loads most of the pages
 
     <default>
 
-        <!-- MageGoat_GetMember -->
+        <!-- Goat_GetMember -->
        <!--  <reference name="footer">
             <block type="core/template" name="footer.member.code" as="membercode" before="-" template="getmember/member-code.phtml"/>
         </reference> -->
@@ -25,7 +25,7 @@ Default layout, loads most of the pages
 
     <!-- customer painel -->
     <customer_account>
-        <!-- MageGoat_GetMember -->
+        <!-- Goat_GetMember -->
         <reference name="customer_account_navigation">
             <action method="addLink" translate="label"><name>getmember</name><path>getmember/member/dashboard</path><label>Member Get Member</label></action>
         </reference>
