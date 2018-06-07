@@ -49,4 +49,10 @@ Default layout, loads most of the pages
            <block type="getmember/member_points" name="footer.member.point" as="member-points" after="-" template="getmember/checkout/cart-points.phtml" />
         </reference>
     </checkout_cart_index>
+
+    <sales_order_view>
+        <reference name="order_totals">
+            <block type="getmember/sales_order_total_point" />
+        </reference>
+    </sales_order_view>
 </layout>
