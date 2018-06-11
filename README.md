@@ -4,7 +4,7 @@ Member Get Member - Magento 1
 
 ```
 $ cd /path/to/module
-$ git clone https://github.com/MageGoat/GetMember.git
+$ git clone https://github.com/Goat/GetMember.git
 ```
 
 
@@ -36,3 +36,5 @@ DROP TABLE `getmember_member`;
 DROP TABLE `getmember_point`;
 DELETE FROM `core_resource` WHERE `core_resource`.`code` = 'getmember_setup';
 ```
+
+![Mage Goat](https://github.com/MageGoat/GetMember/blob/master/goat.gif)
