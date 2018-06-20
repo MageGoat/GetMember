@@ -55,8 +55,14 @@
                         <class>getmember/observer</class>
                         <method>setMemberCodeInSession</method>
                     </set_membercode_session>
+
+                    <apply_coupon_member>
+                        <class>getmember/observer</class>
+                        <method>applyCouponMember</method>
+                    </apply_coupon_member>
                 </observers>
             </controller_action_predispatch>
+            
             <checkout_type_onepage_save_order>
                 <observers>
                     <record_member_order>
@@ -65,6 +71,7 @@
                     </record_member_order>
                 </observers>
             </checkout_type_onepage_save_order>
+
             <sales_order_invoice_pay>
                 <observers>
                     <set_member_point_paid>
@@ -74,7 +81,6 @@
                 </observers>
             </sales_order_invoice_pay>
         </events>
-
         <sales>
             <quote>
                 <totals>

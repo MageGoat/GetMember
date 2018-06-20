@@ -17,6 +17,31 @@ class Goat_GetMember_Model_Observer
     }
 
     /**
+     * Get checkout session model instance
+     *
+     * @return Mage_Checkout_Model_Session
+     */
+    protected function _getCheckout()
+    {
+        return Mage::getSingleton('checkout/session');
+    }
+
+    /**
+     *
+     * check a valid memberCode
+     */
+    protected function _isValidMemberCode($code)
+    {
+        $memberModel = Mage::getModel('getmember/member')->loadByMemberCode($code);
+
+        if (!$memberModel->getId()) {
+           return false;
+        }
+
+        return true;
+    }
+
+    /**
      * set member code on session for use after
      *
      * @param Varien_Event_Observer $observer
@@ -30,9 +55,47 @@ class Goat_GetMember_Model_Observer
         if (empty($parmMemberCode)) {
            return $this;
         }
+
+        if (!$this->_isValidMemberCode($parmMemberCode)) {
+            return $this;
+        }
+
         $this->_getSession()->setMemberCode($parmMemberCode);
 
         return $this;
+    }
+
+    /**
+     *
+     * apply Coupon on cart associte to members
+     */
+    public function applyCouponMember(Varien_Event_Observer $observer)
+    {
+        $mCode = $this->_getSession()->getMemberCode();
+
+        if (empty($mCode) || !$this->_isValidMemberCode($mCode)) {
+           return $this;
+        }
+
+        $couponCode = Mage::getStoreConfig('getmember/configuration/coupon_member');
+
+        $this->_getCheckout()->setCartCouponCode($couponCode);
+        
+         try {
+            $codeLength = strlen($couponCode);  
+            $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
+
+            $this->_getCheckout()->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+            $this->_getCheckout()->getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
+                ->collectTotals()
+                ->save();
+
+        } catch (Mage_Core_Exception $e) {
+            $this->_getSession()->addError($e->getMessage());
+        } catch (Exception $e) {
+            $this->_getSession()->addError(Mage::helper('core')->__('Cannot apply the coupon code.'));
+            Mage::logException($e);
+        }
     }
 
     /**
