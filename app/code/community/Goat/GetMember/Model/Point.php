@@ -6,9 +6,9 @@
 class Goat_GetMember_Model_Point extends Goat_GetMember_Model_Abstract
 {
 
-	const STATE_NEW  	   = 'new';
+	const STATE_EARNED     = 'earned';
     const STATE_USED       = 'used';
-	const STATE_AVAILABLE  = 'available';
+    const STATE_WAITING    = 'waiting';
 
     protected $_eventPrefix = 'point';
 

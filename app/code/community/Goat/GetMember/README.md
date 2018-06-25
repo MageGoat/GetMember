@@ -17,7 +17,7 @@ tabela getmember_point
 	customer_member_id *
 	member_code - <history>
 	points
-	states ('available' - 'used')
+	states ('earned' - 'used' - 'waiting')
 	create-at 
 	update_at
 

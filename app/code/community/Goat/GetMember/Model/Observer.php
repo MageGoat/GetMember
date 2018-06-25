@@ -99,21 +99,24 @@ class Goat_GetMember_Model_Observer
     }
 
     /**
-     * record associate member order 
+     * record points associate member 
      *
      * @param Varien_Event_Observer $observer
      * @return void
      */
-    public function recordMemberOrder(Varien_Event_Observer $observer)
+    public function recordPointsToMember(Varien_Event_Observer $observer)
     {
-        $order         = $observer->getOrder();
+        $order      = $observer->getOrder();
+        $memberCode = $this->_getSession()->getMemberCode();
 
-        if (empty($this->_getSession()->getMemberCode())) {
+        if (empty($memberCode)) {
            return $this;
         }
 
         $pointModel  = Mage::getModel('getmember/point');
-        $memberModel = Mage::getModel('getmember/member')->loadByMemberCode($this->_getSession()->getMemberCode());
+        $memberModel = Mage::getModel('getmember/member');
+
+        $memberModel->loadByMemberCode($memberCode);
 
         if (!$memberModel->getCustomerId()) {
            return $this;
@@ -124,22 +127,60 @@ class Goat_GetMember_Model_Observer
         }
 
         $pointModel->setOrderIncrementId($order->getIncrementId());
-        $pointModel->setCustomerId($memberModel->getCustomerId());
-        $pointModel->setMemberCode($this->_getSession()->getMemberCode());
-        $pointModel->setState(Goat_GetMember_Model_Point::STATE_NEW);
+        $pointModel->setCustomerId($memberModel->getCustomerId()); //Member Customer Id
+        $pointModel->setState(Goat_GetMember_Model_Point::STATE_WAITING);
         $pointModel->save();
 
         return $this;
     }
+
     /**
-     * update status point to AVAILABLE
+     * record used point associate member customer 
      *
      * @param Varien_Event_Observer $observer
      * @return void
      */
-    public function setMemberPointPaid(Varien_Event_Observer $observer)
+    public function recordUsedPointsToMember(Varien_Event_Observer $observer)
     {
-        $invoice = $observer->getInvoice();
+        $order      = $observer->getOrder();
+
+        if (!$orderIncrement = $order->getIncrementId()) {
+           return $this;
+        }
+
+        if (intval($order->getPointAmount()) >= 0) {
+            return $this;
+        }
+
+        $pointUsedModel  = Mage::getModel('getmember/point');
+
+        $pointUsedModel->loadByOrderIncrementId($orderIncrement);
+
+        //already record
+        if ($pointUsedModel->getId()) {
+            return $this;
+        }
+
+        $pointUsedModel->setOrderIncrementId($order->getIncrementId());
+        $pointUsedModel->setCustomerId($order->getCustomerId()); //Member Customer Id
+        $pointUsedModel->setState(Goat_GetMember_Model_Point::STATE_USED);
+        $pointUsedModel->setPoints(intval($order->getPointAmount()));
+        $pointUsedModel->save();
+
+        return $this;
+    }
+
+    /**
+     * update point STATE_WAITING to STATE_EARNED
+     *
+     * @param Varien_Event_Observer $observer
+     * @return void
+     */
+    public function earnPointPaid(Varien_Event_Observer $observer)
+    {
+        $invoice    = $observer->getInvoice();
+        $pointModel = Mage::getModel('getmember/point');
+
 
         if ($invoice->getState() !== Mage_Sales_Model_Order_Invoice::STATE_PAID) {
             return $this;
@@ -149,13 +190,15 @@ class Goat_GetMember_Model_Observer
            return $this;
         }
 
-        $pointModel = Mage::getModel('getmember/point')->loadByOrderIncrementId($orderIncrement);
+        $pointModel->loadByOrderIncrementId($orderIncrement);
 
-        if ($pointModel->getId() && $pointModel->getState() !== Goat_GetMember_Model_Point::STATE_USED) {
-           $pointModel->setState(Goat_GetMember_Model_Point::STATE_AVAILABLE);
-           $pointModel->setPoints(intval($pointModel->getPoints() + $invoice->getGrandTotal()));
-           $pointModel->save();
+        if (!$pointModel->getId() && $pointModel->getState() !== Goat_GetMember_Model_Point::STATE_WAITING) {
+            return $this;
         }
+
+        $pointModel->setState(Goat_GetMember_Model_Point::STATE_EARNED);
+        $pointModel->setPoints(intval($pointModel->getPoints() + $invoice->getGrandTotal()));
+        $pointModel->save();
 
         return $this;
     }

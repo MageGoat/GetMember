@@ -91,9 +91,6 @@ $memberPointsTable = $installer->getConnection()
         'nullable'  => false,
         ), 'customer id associente to points')
 
-    ->addColumn('member_code', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-        ), 'code associente to member')
-
     ->addColumn('points', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'nullable'  => true,
         ), 'Points')

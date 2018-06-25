@@ -65,19 +65,23 @@
             
             <checkout_type_onepage_save_order>
                 <observers>
-                    <record_member_order>
+                    <record_points_member>
                         <class>getmember/observer</class>
-                        <method>recordMemberOrder</method>
-                    </record_member_order>
+                        <method>recordPointsToMember</method>
+                    </record_points_member>
+                    <record_points_used_member>
+                        <class>getmember/observer</class>
+                        <method>recordUsedPointsToMember</method>
+                    </record_points_used_member>
                 </observers>
             </checkout_type_onepage_save_order>
 
             <sales_order_invoice_pay>
                 <observers>
-                    <set_member_point_paid>
+                    <earn_points_paid>
                         <class>getmember/observer</class>
-                        <method>setMemberPointPaid</method>
-                    </set_member_point_paid>
+                        <method>earnPointPaid</method>
+                    </earn_points_paid>
                 </observers>
             </sales_order_invoice_pay>
         </events>
