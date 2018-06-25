@@ -29,8 +29,14 @@ td, th {
 }
 
 .note-msg {
+	border-top: 1px solid #cccccc;
+}
 
-border-top: 1px solid #cccccc;
+.earned {
+	color: green;
+}
+.used {
+	color: orange;
 }
 
 </style>
@@ -45,7 +51,7 @@ border-top: 1px solid #cccccc;
   </tr>
 		
 	<?php foreach ($_pointCollection as $_point): ?>
-			<tr>
+			<tr class="<?php echo $_point->getState(); ?> ">
 				<td><?php echo $_point->getOrderIncrementId(); ?></td>
 				<td class="points-mumber" data-points="<?php echo $_point->getPoints(); ?>"><?php echo $_point->getPoints(); ?></td>
 				<td><?php echo $_point->getState(); ?></td>

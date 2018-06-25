@@ -192,13 +192,15 @@ class Goat_GetMember_Model_Observer
 
         $pointModel->loadByOrderIncrementId($orderIncrement);
 
-        if (!$pointModel->getId() && $pointModel->getState() !== Goat_GetMember_Model_Point::STATE_WAITING) {
+        if (!$pointModel->getId()){
             return $this;
         }
 
-        $pointModel->setState(Goat_GetMember_Model_Point::STATE_EARNED);
-        $pointModel->setPoints(intval($pointModel->getPoints() + $invoice->getGrandTotal()));
-        $pointModel->save();
+        if ($pointModel->getState() == Goat_GetMember_Model_Point::STATE_WAITING) {
+            $pointModel->setState(Goat_GetMember_Model_Point::STATE_EARNED);
+            $pointModel->setPoints(intval($pointModel->getPoints() + $invoice->getGrandTotal()));
+            $pointModel->save();
+        }
 
         return $this;
     }
