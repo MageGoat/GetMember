@@ -5,7 +5,7 @@
  */
 
  /**
-  * Totals point block
+  * Totals point block </adminhtml//getmember.xml/>
   */
 class Goat_GetMember_Block_Adminhtml_Sales_Order_Totals_Point extends Mage_Sales_Block_Order_Totals
 {
@@ -32,6 +32,11 @@ class Goat_GetMember_Block_Adminhtml_Sales_Order_Totals_Point extends Mage_Sales
      */
     public function initTotals()
     {
+
+        if (((float)$this->getSource()->getPointAmount()) == 0) {
+            return $this;
+        }
+        
         $total = new Varien_Object(array(
             'code'      => 'point_amount',
             'area'      => $this->getDisplayArea(),

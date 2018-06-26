@@ -15,6 +15,7 @@
             <block type="getmember/adminhtml_sales_order_totals_point" />
         </reference>
     </adminhtml_sales_order_view>
+
     <adminhtml_sales_order_invoice_new>
         <reference name="invoice_totals">
             <block type="getmember/adminhtml_sales_order_totals_point" />
@@ -30,4 +31,15 @@
             <block type="getmember/adminhtml_sales_order_totals_point" />
         </reference>
     </adminhtml_sales_order_invoice_updateqty>
+    
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="getmember/adminhtml_sales_order_totals_point" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="getmember/adminhtml_sales_order_totals_point" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
 </layout>

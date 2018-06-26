@@ -16,15 +16,16 @@ class Goat_GetMember_Block_Sales_Order_Total_Point extends Mage_Sales_Block_Orde
      */
     public function initTotals()
     {
-        /*echo "<pre>";
-        print_r($this->getOrder()->getData());
-        die;*/
+        if (((float)$this->getSource()->getPointAmount()) == 0) {
+            return $this;
+        }
+        
         $total = new Varien_Object(array(
             'code'      => 'point_amount',
             #'block_name'=> 'point',
             'area'      => $this->getDisplayArea(),
             'strong'    => false,
-            'value' => $this->getOrder()->getPointAmount(),
+            'value' => $this->getSource()->getPointAmount(),
             'label' => $this->__('Point Amount')
         ));
         if ($this->getBeforeCondition()) {

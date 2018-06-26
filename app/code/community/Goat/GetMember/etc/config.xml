@@ -90,7 +90,8 @@
                 <totals>
                     <point>
                         <class>getmember/sales_quote_address_total_point</class>
-                         <after>discount</after> <!-- never change :D -->
+                        <after>discount</after> <!-- never change :D -->
+                        <before>shipping</before>
                     </point>
                 </totals>
             </quote>
@@ -99,9 +100,19 @@
                     <point>
                         <class>getmember/sales_order_invoice_total_point</class>
                         <after>discount</after> <!-- never change :D -->
+                        <before>shipping</before>
                     </point>
                 </totals>
             </order_invoice>
+             <order_creditmemo>
+                <totals>
+                    <point>
+                        <class>getmember/sales_order_creditmemo_total_point</class>
+                        <after>discount</after> <!-- never change :D -->
+                        <before>shipping</before>
+                    </point>
+                </totals>
+            </order_creditmemo>
        </sales>
        <fieldsets>
             <sales_convert_quote_address>
@@ -137,4 +148,11 @@
             </updates>
         </layout>
     </adminhtml>
+    <default>
+        <sales>
+            <totals_sort>
+                <point>25</point>
+            </totals_sort>
+        </sales>
+    </default>
 </config>
