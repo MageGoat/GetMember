@@ -17,26 +17,48 @@ class Goat_GetMember_Model_Sales_Quote_Address_Total_Point extends Mage_Sales_Mo
         if (!count($items)) {
             return $this; //this makes only address type shipping to come through
         }
- 
+        
+
         $quote = $address->getQuote();
         $customerSessionModel = Mage::getSingleton('customer/session');
+        $memberSessionPoints = $this->_getCheckout()->getPoints();
 
-        if($this->_getCheckout()->getApplyMemberPoint()) { //your business logic
-            
-            /** @var $_memberModel Goat_GetMember_Model_Member */
-            $_memberModel = Mage::getModel('getmember/member');
-            $_memberModel->loadByCustomerId($customerSessionModel->getCustomerId());
-
-            $_totalPointBalance  = $_memberModel->getAllPoints()->getTotalPoints();
-
-            $address->setPointAmount(-$_totalPointBalance);
-            $address->setBasePointAmount(-$_totalPointBalance);
-                 
-            #$quote->setPointAmount(-$_totalPointBalance);
- 
-            $address->setGrandTotal($address->getGrandTotal() + $address->getPointAmount());
-            $address->setBaseGrandTotal($address->getBaseGrandTotal() + $address->getBasePointAmount());
+        if(!$memberSessionPoints) { //your business logic
+            return;
         }
+
+        $cartAmount = $address->getSubtotal() + $address->getDiscountAmount();
+
+        if ($cartAmount <= 0 ) {
+            $this->_getCheckout()->setPoints('');
+            $this->_getCheckout()->addError(Mage::helper('getmember')->__('Discount of "%s". You can not use points! ', $address->getDiscountAmount()));
+            return;
+        }
+
+        /** @var $_memberModel Goat_GetMember_Model_Member */
+        $memberModel = Mage::getModel('getmember/member');
+        $memberModel->loadByCustomerId($customerSessionModel->getCustomerId());
+
+        $_totalMemberPoint  = $memberModel->getAllPoints()->getTotalPoints();
+
+        if ($memberSessionPoints > $_totalMemberPoint) {
+            $memberSessionPoints = $_totalMemberPoint;
+        }
+
+        if ($memberSessionPoints > $cartAmount) {
+            $memberSessionPoints = ($cartAmount - 1);
+
+            $this->_getCheckout()->addError(Mage::helper('getmember')->__('Sorry, but you can use a maximum of "%s" points!', $memberSessionPoints));
+        }
+
+        $this->_getCheckout()->setPoints($memberSessionPoints);
+
+        $address->setPointAmount(-$memberSessionPoints);
+        $address->setBasePointAmount(-$memberSessionPoints);
+        
+    
+        $address->setGrandTotal($address->getGrandTotal() + $address->getPointAmount());
+        $address->setBaseGrandTotal($address->getBaseGrandTotal() + $address->getBasePointAmount());
     }
  
     public function fetch(Mage_Sales_Model_Quote_Address $address)

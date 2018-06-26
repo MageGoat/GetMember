@@ -25,6 +25,11 @@
 	#point-form .field-wrapper {
 	  display: inline-block;
 	}
+
+	#point-form .field-wrapper .input-text  {
+	  display: inline-block;
+	  width: 180px;
+	}
 	#point-form .button-wrapper {
 	  display: inline-block;
 	  vertical-align: bottom;
@@ -42,11 +47,17 @@
     <div class="point">
         <div class="fieldset">
         	<?php echo $this->getBlockHtml('formkey')?>
-            <label for="member_point"><?php echo $this->__('Member Points') ?></label>
+            	<label ><?php echo $this->__('Member Points (R$ %s)', $total) ?></label>
+                <input type="hidden" id="apply_member_point" name="apply_member_point" value="1">
+                
             <div class="field-wrapper">
-                <span><?php echo $total ?></span>
+                <input type="text" class="input-text" id="points" name="points" value="<?php echo $this->escapeHtml($this->getPoints()) ?>">
                 <div class="button-wrapper">
-                	<input type="checkbox" <?php echo ($this->isApplyMemberPoint())? 'checked': ''; ?> onclick="pointForm.submit()" name="apply_member_point" value="1">
+                    <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Apply')) ?>" class="button2" onclick="pointForm.submit(false)" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>
+                    <?php if($this->getPoints() > 0): ?>
+                        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cancel')) ?>" class="button2" onclick="pointForm.submit(true)" value="<?php echo $this->__('Cancel') ?>"><span><span><?php echo $this->__('Cancel') ?></span></span>
+                        </button>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
@@ -55,6 +66,16 @@
 <script type="text/javascript">
 //<![CDATA[
 	var pointForm = new VarienForm('point-form');
+	pointForm.submit = function (isRemove) {
+	    if (isRemove) {
+	        $('points').removeClassName('required-entry');
+	        $('apply_member_point').value = "0";
+	    } else {
+	        $('points').addClassName('required-entry');
+	        $('apply_member_point').value = "1";
+	    }
+	    return VarienForm.prototype.submit.bind(pointForm)();
+	}
 //]]>
 </script>
 <?php endif ?>

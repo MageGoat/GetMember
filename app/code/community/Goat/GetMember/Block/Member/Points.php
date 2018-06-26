@@ -90,9 +90,20 @@ class Goat_GetMember_Block_Member_Points extends Mage_Checkout_Block_Cart_Abstra
         return $this->_getPointCollection()->getTotalPoints();
     }
 
+    /**
+     *
+     */
     public function isApplyMemberPoint()
     {
         return $this->getCheckout()->getApplyMemberPoint();
+    }
+
+    /**
+     *
+     */
+    public function getPoints()
+    {
+        return $this->getCheckout()->getPoints();
     }
 
     /**

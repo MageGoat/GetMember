@@ -131,6 +131,7 @@ class Goat_GetMember_Model_Observer
         $pointModel->setState(Goat_GetMember_Model_Point::STATE_WAITING);
         $pointModel->save();
 
+        $this->_getCheckout()->setPoints('');
         return $this;
     }
 

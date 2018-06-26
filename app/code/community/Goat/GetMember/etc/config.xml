@@ -90,7 +90,7 @@
                 <totals>
                     <point>
                         <class>getmember/sales_quote_address_total_point</class>
-                         <after>grand_total</after>
+                         <after>discount</after> <!-- never change :D -->
                     </point>
                 </totals>
             </quote>
@@ -98,7 +98,7 @@
                 <totals>
                     <point>
                         <class>getmember/sales_order_invoice_total_point</class>
-                        <after>grand_total</after>
+                        <after>discount</after> <!-- never change :D -->
                     </point>
                 </totals>
             </order_invoice>
