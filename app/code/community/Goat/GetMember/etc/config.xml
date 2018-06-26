@@ -55,14 +55,18 @@
                         <class>getmember/observer</class>
                         <method>setMemberCodeInSession</method>
                     </set_membercode_session>
-
+                </observers>
+            </controller_action_predispatch>
+            
+            <controller_action_predispatch_checkout>
+                <observers>
                     <apply_coupon_member>
                         <class>getmember/observer</class>
                         <method>applyCouponMember</method>
                     </apply_coupon_member>
                 </observers>
-            </controller_action_predispatch>
-            
+            </controller_action_predispatch_checkout>
+
             <checkout_type_onepage_save_order>
                 <observers>
                     <record_points_member>

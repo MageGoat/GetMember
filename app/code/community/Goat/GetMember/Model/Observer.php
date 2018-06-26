@@ -80,23 +80,8 @@ class Goat_GetMember_Model_Observer
         $couponCode = Mage::getStoreConfig('getmember/configuration/coupon_member');
 
         #$this->_getCheckout()->setCartCouponCode($couponCode); //hard coupon
-        $this->_getCheckout()->setCouponCode($couponCode);
-        
-         try {
-            $codeLength = strlen($couponCode);  
-            $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
-
-            $this->_getCheckout()->getQuote()->getShippingAddress()->setCollectShippingRates(true);
-            $this->_getCheckout()->getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
-                ->collectTotals()
-                ->save();
-
-        } catch (Mage_Core_Exception $e) {
-            $this->_getSession()->addError($e->getMessage());
-        } catch (Exception $e) {
-            $this->_getSession()->addError(Mage::helper('core')->__('Cannot apply the coupon code.'));
-            Mage::logException($e);
-        }
+        $this->_getCheckout()->getQuote()->setCouponCode($couponCode);
+        return;
     }
 
     /**
