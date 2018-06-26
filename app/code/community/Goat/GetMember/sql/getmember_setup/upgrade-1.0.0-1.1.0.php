@@ -18,6 +18,3 @@ $installer->addAttribute('invoice', 'base_point_amount', array('type'=>'decimal'
 
 $installer->addAttribute('creditmemo', 'point_amount', array('type'=>'decimal'));
 $installer->addAttribute('creditmemo', 'base_point_amount', array('type'=>'decimal'));
-
-$installer->addAttribute('shipment', 'point_amount', array('type'=>'decimal'));
-$installer->addAttribute('shipment', 'base_point_amount', array('type'=>'decimal'));
