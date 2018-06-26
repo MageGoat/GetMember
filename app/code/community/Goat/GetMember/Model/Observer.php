@@ -79,7 +79,8 @@ class Goat_GetMember_Model_Observer
 
         $couponCode = Mage::getStoreConfig('getmember/configuration/coupon_member');
 
-        $this->_getCheckout()->setCartCouponCode($couponCode);
+        #$this->_getCheckout()->setCartCouponCode($couponCode); //hard coupon
+        $this->_getCheckout()->setCouponCode($couponCode);
         
          try {
             $codeLength = strlen($couponCode);  
@@ -131,7 +132,6 @@ class Goat_GetMember_Model_Observer
         $pointModel->setState(Goat_GetMember_Model_Point::STATE_WAITING);
         $pointModel->save();
 
-        $this->_getCheckout()->setPoints('');
         return $this;
     }
 
@@ -168,6 +168,7 @@ class Goat_GetMember_Model_Observer
         $pointUsedModel->setPoints(intval($order->getPointAmount()));
         $pointUsedModel->save();
 
+        $this->_getCheckout()->setPoints('');
         return $this;
     }
 
