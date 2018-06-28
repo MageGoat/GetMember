@@ -104,7 +104,7 @@ class Goat_GetMember_Model_Observer
 
         $memberModel->loadByMemberCode($memberCode);
 
-        if (!$memberModel->getCustomerId()) {
+        if ($memberModel->getCustomerId() == $observer->getOrder()->getCustomerId()) {
            return $this;
         }
 
