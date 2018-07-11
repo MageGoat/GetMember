@@ -4,7 +4,7 @@ Member Get Member - Magento 1
 
 ```
 $ cd /path/to/module
-$ git clone https://github.com/Goat/GetMember.git
+$ git clone https://github.com/MageGoat/GetMember.git
 ```
 
 
