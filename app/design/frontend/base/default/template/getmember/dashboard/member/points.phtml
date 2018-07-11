@@ -47,12 +47,18 @@ td, th {
 <?php else: ?>
 <table>
   <tr>
-    <th>Order Increment</th><th>Points</th><th>State</th>
+    <th>History</th><th>Points</th><th>State</th>
   </tr>
 		
 	<?php foreach ($_pointCollection as $_point): ?>
 			<tr class="<?php echo $_point->getState(); ?> ">
-				<td><?php echo $_point->getOrderIncrementId(); ?></td>
+				<?php if ($_point->getState() == Goat_GetMember_Model_Point::STATE_USED): ?>
+					<td><?php echo $_point->getOrderIncrementId(); ?></td>
+					<?php else: ?>
+					<td>
+					<?php echo $this->__('%s %s',$_point->getCustomerFirstname(), $_point->getCustomerLastname()) ?>
+					</td>
+				<?php endif ?>
 				<td class="points-mumber" data-points="<?php echo $_point->getPoints(); ?>"><?php echo $_point->getPoints(); ?></td>
 				<td><?php echo $_point->getState(); ?></td>
 			</tr>

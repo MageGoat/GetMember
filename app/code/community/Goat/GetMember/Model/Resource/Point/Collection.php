@@ -22,7 +22,7 @@ class Goat_GetMember_Model_Resource_Point_Collection extends Mage_Core_Model_Res
      */
     public function addCustomerFilter($customer_id)
     {
-        $this->addFieldToFilter('customer_id', $customer_id);         
+        $this->addFieldToFilter('main_table.' . 'customer_id', $customer_id);         
         return $this;
     }
 

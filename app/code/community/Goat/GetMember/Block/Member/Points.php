@@ -56,6 +56,12 @@ class Goat_GetMember_Block_Member_Points extends Mage_Checkout_Block_Cart_Abstra
             $memberModel->loadByCustomerId($customerSessionModel->getCustomerId());
 
             $this->_pointCollection = $memberModel->getAllPoints();
+
+            $this->_pointCollection->getSelect()->joinLeft(
+                array('order' => 'sales_flat_order'),
+                'order.increment_id=main_table.order_increment_id',
+                array('customer_firstname' => 'order.customer_firstname', 'customer_lastname' => 'order.customer_lastname', 'customer_email' => 'order.customer_email'));
+
         }
         return $this->_pointCollection;
     }
